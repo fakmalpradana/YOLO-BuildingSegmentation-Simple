@@ -1,6 +1,7 @@
 import json
 import numpy as np
 import os
+import platform
 
 from utils.json_ import jsonYOLO
 
@@ -55,13 +56,17 @@ class Predict:
     def predict(self):
         # predict image dengan model yolo, output berupa list ndarray
         model = YOLO(self.model) #best model pake 53 aja
-        res = model.predict(
-            self.img, 
-            show_boxes=self.show_box, 
-            conf=self.conf, 
-            iou=self.iou,
-            verbose=False,
-        )
+        if platform.system() == 'Windows':
+            print('[WinError 5] Access is denied')
+            res = self.img
+        else:
+            res = model.predict(
+                self.img, 
+                show_boxes=self.show_box, 
+                conf=self.conf, 
+                iou=self.iou,
+                verbose=False,
+            )
 
         return res
     

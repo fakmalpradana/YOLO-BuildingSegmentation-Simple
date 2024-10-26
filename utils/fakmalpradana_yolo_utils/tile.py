@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 import patchify as p
+import platform
 
 from osgeo import gdal
 
@@ -15,7 +16,10 @@ class tile_img:
         self.h0 = self.img.shape[0]
         self.w0 = self.img.shape[1]
 
-        temp = [DIM*((self.h0//DIM)+1), DIM*((self.w0//DIM)+1)]
+        if platform.system() == 'Windows':
+            temp = [DIM*((self.h0//256)+1), DIM*((self.w0//320)+1)]
+        else:
+            temp = [DIM*((self.h0//DIM)+1), DIM*((self.w0//DIM)+1)]
         dimm = temp[0] if temp[0] > temp[1] else temp[1]
         self.temp = temp
         self.dim = [dimm, dimm]

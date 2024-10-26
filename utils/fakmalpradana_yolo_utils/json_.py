@@ -2,6 +2,7 @@ import json
 import numpy as np
 import matplotlib.pyplot as plt 
 import matplotlib.patches as patches
+import platform
 
 class jsonYOLO:
     def __init__(self, path:str):
@@ -76,11 +77,12 @@ class Converter:
         # Calculate the scaling factor for width and height
         # dim.dim[1] += DIM
         # dim.dim[0] += DIM
-
-        scaleX = ((dim.patch[0] * DIM) / (dim.w0))
-        scaleY = ((dim.patch[0] * DIM) / (dim.h0))
-        # scaleX = ((dim.dim[1]) / dim.w0)
-        # scaleY = ((dim.dim[1]) / dim.w0)
+        if platform.system() == 'Windows':
+            scaleX = ((dim.dim[1]) / dim.w0)
+            scaleY = ((dim.dim[1]) / dim.w0)
+        else:
+            scaleX = ((dim.patch[0] * DIM) / (dim.w0))
+            scaleY = ((dim.patch[0] * DIM) / (dim.h0))
 
         # # eksperimen
         # if rangeX > rangeY:
